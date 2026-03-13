@@ -1,3 +1,53 @@
 [build]
 command = ""
 publish = "."
+
+[[headers]]
+for = "/assets/*"
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "/*.jpg"
+  [headers.values]
+  Cache-Control = "public, max-age=604800"
+
+[[headers]]
+for = "/*.png"
+  [headers.values]
+  Cache-Control = "public, max-age=604800"
+
+[[headers]]
+for = "/*.pdf"
+  [headers.values]
+  Cache-Control = "public, max-age=604800"
+
+[[headers]]
+for = "/index.html"
+  [headers.values]
+  Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+from = "/api/send-general-contact"
+to = "/.netlify/functions/send-general-contact"
+status = 200
+
+[[redirects]]
+from = "/api/send-contact-email"
+to = "/.netlify/functions/send-contact-email"
+status = 200
+
+[[redirects]]
+from = "/api/send-ebook-email"
+to = "/.netlify/functions/send-ebook-email"
+status = 200
+
+[[redirects]]
+from = "/api/send-genai-email"
+to = "/.netlify/functions/send-genai-email"
+status = 200
+
+[[redirects]]
+from = "/api/send-audit-email"
+to = "/.netlify/functions/send-audit-email"
+status = 200
