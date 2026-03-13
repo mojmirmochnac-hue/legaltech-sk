@@ -1,7 +1,7 @@
 const RESEND_API_URL = "https://api.resend.com/emails";
 
 const FALLBACK_RESEND_API_KEY = "re_8HRyStCw_BtEAkws4fzQW3uTnFVgBjf91";
-const CONTACT_EMAIL = process.env.RESEND_TO_EMAIL || "miriam.mochnacova@gmail.com";
+const CONTACT_EMAIL = process.env.RESEND_TO_EMAIL || "mojmir.mochnac@gmail.com";
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "LegalTech <onboarding@resend.dev>";
 
 function json(statusCode, body) {
