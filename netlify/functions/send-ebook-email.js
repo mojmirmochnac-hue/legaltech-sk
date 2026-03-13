@@ -1,6 +1,9 @@
-const { parseBody, sendViaResend, json } = require("./_resend");
+const { parseBody, sendViaResend, json, handleOptions } = require("./_resend");
 
 exports.handler = async (event) => {
+  const optionsResponse = handleOptions(event);
+  if (optionsResponse) return optionsResponse;
+
   if (event.httpMethod !== "POST") {
     return json(405, { error: "Method Not Allowed" });
   }
