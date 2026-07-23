@@ -1,14 +1,794 @@
 <!doctype html>
-<html lang="en">
+<html lang="sk">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-    <script type="module" crossorigin src="/assets/index-ujQ5BWco.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-UdIl9BwM.css">
+    <meta name="description" content="LegalTech poradenstvo pre advokatske kancelarie: automatizacia, digitalizacia, virtualny sekretariat a zmysluplne vyuzitie AI v pravnej praxi." />
+    <title>LegalTech | Advokacia 4.0</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #16213a;
+        --muted: #5f6c80;
+        --line: #dce4ee;
+        --paper: #ffffff;
+        --soft: #f4f7fb;
+        --accent: #11836f;
+        --accent-dark: #0c5f52;
+        --gold: #c39443;
+        --navy: #1f3457;
+        --shadow: 0 18px 55px rgba(22, 33, 58, 0.13);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      svg {
+        max-width: 100%;
+      }
+
+      .container {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid rgba(220, 228, 238, 0.9);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        color: #ffffff;
+        background: var(--navy);
+        border-radius: 8px;
+        font-weight: 900;
+      }
+
+      .links {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .links a:hover {
+        color: var(--accent-dark);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-weight: 750;
+        color: #ffffff;
+        background: var(--accent);
+        box-shadow: 0 12px 22px rgba(17, 131, 111, 0.18);
+      }
+
+      .button:hover {
+        background: var(--accent-dark);
+      }
+
+      .button.secondary {
+        color: var(--ink);
+        background: #ffffff;
+        border-color: var(--line);
+        box-shadow: none;
+      }
+
+      .button.secondary:hover {
+        color: var(--accent-dark);
+        border-color: rgba(17, 131, 111, 0.45);
+        background: #f8fbfa;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: calc(100vh - 76px);
+        display: grid;
+        align-items: center;
+        padding: 72px 0 46px;
+        color: #ffffff;
+        background:
+          linear-gradient(105deg, rgba(16, 31, 56, 0.94), rgba(16, 31, 56, 0.73) 52%, rgba(16, 31, 56, 0.38)),
+          url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1800&q=80") center / cover;
+      }
+
+      .hero .container {
+        display: grid;
+        gap: 42px;
+      }
+
+      .kicker {
+        margin: 0 0 18px;
+        color: #cce5de;
+        font-size: 0.9rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin-bottom: 22px;
+        font-size: clamp(2.6rem, 6vw, 5.6rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 680px;
+        margin-bottom: 30px;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: clamp(1.05rem, 2vw, 1.28rem);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .hero .button.secondary {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.32);
+      }
+
+      .hero .button.secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .quick-points {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        max-width: 900px;
+      }
+
+      .quick-point {
+        min-height: 112px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .quick-point strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #ffffff;
+      }
+
+      .quick-point span {
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.95rem;
+      }
+
+      section {
+        padding: 82px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 34px;
+      }
+
+      .section-head h2 {
+        max-width: 680px;
+        margin-bottom: 0;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .section-head p {
+        max-width: 430px;
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .services {
+        background: var(--soft);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .service {
+        min-height: 270px;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 8px 26px rgba(22, 33, 58, 0.06);
+      }
+
+      .icon {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        margin-bottom: 20px;
+        color: var(--accent-dark);
+        background: #e8f5f1;
+        border-radius: 8px;
+        font-weight: 900;
+      }
+
+      .service h3 {
+        margin-bottom: 10px;
+        font-size: 1.15rem;
+        line-height: 1.25;
+      }
+
+      .service p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.98rem;
+      }
+
+      .mission-wrap {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 46px;
+        align-items: center;
+      }
+
+      .mission-photo {
+        min-height: 460px;
+        border-radius: 8px;
+        background:
+          linear-gradient(rgba(31, 52, 87, 0.12), rgba(31, 52, 87, 0.12)),
+          url("https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80") center / cover;
+        box-shadow: var(--shadow);
+      }
+
+      .mission-copy h2 {
+        font-size: clamp(2rem, 4vw, 3.1rem);
+        line-height: 1.08;
+      }
+
+      .mission-copy p {
+        color: var(--muted);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .stat {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--accent-dark);
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .articles {
+        background: #ffffff;
+      }
+
+      .article-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .article {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 20px;
+        padding: 24px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .article:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .date {
+        color: var(--gold);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .article h3 {
+        margin-bottom: 8px;
+        font-size: 1.25rem;
+      }
+
+      .article p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .contact {
+        color: #ffffff;
+        background: var(--navy);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 44px;
+        align-items: start;
+      }
+
+      .contact h2 {
+        font-size: clamp(2rem, 4vw, 3.1rem);
+        line-height: 1.08;
+      }
+
+      .contact p,
+      .contact li {
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .contact ul {
+        display: grid;
+        gap: 12px;
+        margin: 26px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .contact a {
+        color: #ffffff;
+        font-weight: 750;
+      }
+
+      .form {
+        display: grid;
+        gap: 14px;
+        padding: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      label {
+        display: grid;
+        gap: 7px;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        min-height: 46px;
+        padding: 11px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 8px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.1);
+        font: inherit;
+      }
+
+      select option {
+        color: var(--ink);
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.52);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .consent {
+        display: flex;
+        align-items: start;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.88rem;
+      }
+
+      .consent input {
+        width: 18px;
+        min-height: 18px;
+        margin-top: 3px;
+      }
+
+      footer {
+        padding: 28px 0;
+        color: var(--muted);
+        background: #ffffff;
+      }
+
+      .footer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .links {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 72px 0 42px;
+        }
+
+        .quick-points,
+        .grid,
+        .stats,
+        .mission-wrap,
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head {
+          display: block;
+        }
+
+        .section-head p {
+          margin-top: 14px;
+        }
+
+        .mission-photo {
+          min-height: 320px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          width: min(100% - 28px, 1120px);
+        }
+
+        .brand span:last-child {
+          font-size: 0.96rem;
+        }
+
+        .nav .button {
+          display: none;
+        }
+
+        .hero-actions,
+        .form-row,
+        .article {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+
+        .article {
+          gap: 6px;
+        }
+
+        section {
+          padding: 58px 0;
+        }
+
+        .footer-row {
+          display: grid;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <header class="topbar">
+      <nav class="container nav" aria-label="Hlavna navigacia">
+        <a class="brand" href="#uvod" aria-label="LegalTech domov">
+          <span class="brand-mark">LT</span>
+          <span>LegalTech</span>
+        </a>
+        <div class="links">
+          <a href="#sluzby">S cim pomozeme</a>
+          <a href="#misia">Nasa misia</a>
+          <a href="#blog">Blog</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+        <a class="button" href="#kontakt">Mam zaujem</a>
+      </nav>
+    </header>
+
+    <main id="uvod">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <div>
+            <p class="kicker">LegalTech poradenstvo</p>
+            <h1 id="hero-title">Advokacia 4.0</h1>
+            <p class="lead">Riesime technologicke a procesne problemy advokatskych kancelarii, aby ste mali viac casu riesit problemy svojich klientov.</p>
+            <div class="hero-actions">
+              <a class="button" href="#kontakt">Online audit zdarma</a>
+              <a class="button secondary" href="#sluzby">Pozriet sluzby</a>
+            </div>
+          </div>
+          <div class="quick-points" aria-label="Hlavne prinosy">
+            <div class="quick-point">
+              <strong>Automatizacia</strong>
+              <span>Menej rutiny pri dokumentoch, evidencii a opakovanych ukonoch.</span>
+            </div>
+            <div class="quick-point">
+              <strong>Digitalizacia</strong>
+              <span>Prehladne procesy, lepsia kontrola terminov a moderne nastroje.</span>
+            </div>
+            <div class="quick-point">
+              <strong>AI v praxi</strong>
+              <span>Zmysluplne vyuzitie GPT a umelej inteligencie v advokacii.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sluzby" class="services">
+        <div class="container">
+          <div class="section-head">
+            <h2>Pomahame kancelariam pracovat rychlejsie, presnejsie a pokojnejsie.</h2>
+            <p>Vyberieme riesenia, ktore maju zmysel pre vasu prax, klientov a kazdodennu administrativu.</p>
+          </div>
+          <div class="grid">
+            <article class="service">
+              <span class="icon">OR</span>
+              <h3>Automatizovany zapis do OR</h3>
+              <p>Delegujte repetitivne ulohy, ako je priprava zapisov do Obchodneho registra, na automatizovane postupy a ziskajte viac casu pre hodnotnejsiu pracu.</p>
+            </article>
+            <article class="service">
+              <span class="icon">VS</span>
+              <h3>Virtualny sekretariat</h3>
+              <p>Zjednoduste evidenciu korespondencie, sledovanie lehot a dalsie administrativne ulohy, ktore zbytocne rozbijaju pracovny den.</p>
+            </article>
+            <article class="service">
+              <span class="icon">24</span>
+              <h3>Viac klientov</h3>
+              <p>Zlepsime online prezentaciu kancelarie a nastavime kontakt s potencialnymi klientmi tak, aby ste neprichadzali o prilezitosti.</p>
+            </article>
+            <article class="service">
+              <span class="icon">OK</span>
+              <h3>Menej chyb</h3>
+              <p>Minimalizujte chyby v dokumentoch vdaka kontrolnym mechanizmom a rozumnemu vyuzitiu AI pri tvorbe a revizii textov.</p>
+            </article>
+            <article class="service">
+              <span class="icon">DX</span>
+              <h3>Digitalizacia</h3>
+              <p>Optimalizujte kancelariu s modernymi digitalnymi nastrojmi a ziskajte vacsi prehlad nad pracou, ulohami, klientmi a terminmi.</p>
+            </article>
+            <article class="service">
+              <span class="icon">AI</span>
+              <h3>GPT v advokacii</h3>
+              <p>Nastavime pouzivanie generativnej AI tak, aby pomahala efektivite, no respektovala hranice dovernosti, kontroly a odbornej zodpovednosti.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="misia">
+        <div class="container mission-wrap">
+          <div class="mission-photo" role="img" aria-label="Pracovny rozhovor v modernej kancelarii"></div>
+          <div class="mission-copy">
+            <p class="kicker" style="color: var(--accent-dark);">Nasa misia</p>
+            <h2>Spajame pravnu prax s technologiami, ktore maju prakticky vysledok.</h2>
+            <p>LegalTech nie je o nahradeni pravnikov. Je o tom, aby pravnici netravili energiu na cinnostiach, ktore vie lepsie zabezpecit system, automatizacia alebo dobre nastaveny digitalny proces.</p>
+            <p>Pomahame advokatskym kancelariam zaviest nastroje, ktore zvysuju kvalitu sluzieb, setria cas a zlepsuju komunikaciu s klientmi.</p>
+            <div class="stats">
+              <div class="stat">
+                <strong>4.0</strong>
+                <span>Moderne procesy v advokacii</span>
+              </div>
+              <div class="stat">
+                <strong>24/7</strong>
+                <span>Dostupne digitalne kontaktne body</span>
+              </div>
+              <div class="stat">
+                <strong>AI</strong>
+                <span>Prakticke vyuzitie bez zbytocneho rizika</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="blog" class="articles">
+        <div class="container">
+          <div class="section-head">
+            <h2>Najnovsie temy z LegalTechu</h2>
+            <p>Vybrane oblasti, ktore dnes menia sposob prace v advokatskych kancelariach.</p>
+          </div>
+          <div class="article-list">
+            <article class="article">
+              <div class="date">Maj 04</div>
+              <div>
+                <h3>Buducnost pravnych technologii</h3>
+                <p>Technologie prinasa advokacii priestor na efektivnejsie procesy, lepsiu dostupnost sluzieb a kvalitnejsiu interakciu s klientmi.</p>
+              </div>
+            </article>
+            <article class="article">
+              <div class="date">Feb 29</div>
+              <div>
+                <h3>Zefektivnenie procesov v advokatskej kancelarii</h3>
+                <p>Premyslene procesy pomahaju kancelariam udrzat konkurencieschopnost, kvalitu sluzieb a zdravsie pracovné tempo.</p>
+              </div>
+            </article>
+            <article class="article">
+              <div class="date">Feb 14</div>
+              <div>
+                <h3>Kognitivna AI a hodinova sadzba</h3>
+                <p>AI meni sposob, akym sa da pristupovat k repetitivnym pravnym ukonom, kontrole dokumentov a hodnoteniu casovej narocnosti.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="kontakt" class="contact">
+        <div class="container contact-grid">
+          <div>
+            <p class="kicker">Kontakt</p>
+            <h2>Sme Vam k dispozicii.</h2>
+            <p>Pre viac informacii vyplnte kontaktny formular alebo nas kontaktujte priamo. Ozveme sa Vam v case, ktory Vam vyhovuje.</p>
+            <ul>
+              <li>Telefon: <a href="tel:+421915857748">+421 915 857 748</a></li>
+              <li>E-mail: <a href="mailto:office@legaltech.sk">office@legaltech.sk</a></li>
+              <li>E-mail: <a href="mailto:mochnac@legaltech.sk">mochnac@legaltech.sk</a></li>
+              <li>Kosice: Stefanikova 20</li>
+              <li>Praha: Na Strzi 2102/61a</li>
+            </ul>
+          </div>
+          <form class="form" id="contactForm">
+            <div class="form-row">
+              <label>
+                E-mail
+                <input name="email" type="email" autocomplete="email" placeholder="vas@email.sk" required />
+              </label>
+              <label>
+                Telefonne cislo
+                <input name="phone" type="tel" autocomplete="tel" placeholder="+421..." />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Datum kontaktovania
+                <input name="date" type="date" />
+              </label>
+              <label>
+                Cas kontaktovania
+                <select name="time">
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="Iny cas">Iny cas</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              Sprava
+              <textarea name="message" placeholder="Strucne napiste, s cim Vam mozeme pomoct."></textarea>
+            </label>
+            <label class="consent">
+              <input name="consent" type="checkbox" required />
+              <span>Suhlasim so spracovanim osobnych udajov za ucelom kontaktovania.</span>
+            </label>
+            <button class="button" type="submit">Odoslat</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-row">
+        <span>2026 - LegalTech</span>
+        <span>LegalTech poradenstvo pre modernu advokaciu</span>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("contactForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const subject = "Zaujem o LegalTech poradenstvo";
+        const body = [
+          "Dobry den,",
+          "",
+          "mam zaujem o LegalTech poradenstvo.",
+          "",
+          "E-mail: " + (data.get("email") || ""),
+          "Telefon: " + (data.get("phone") || ""),
+          "Preferovany datum: " + (data.get("date") || ""),
+          "Preferovany cas: " + (data.get("time") || ""),
+          "",
+          "Sprava:",
+          data.get("message") || "",
+        ].join("\n");
+        window.location.href = "mailto:office@legaltech.sk?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      });
+    </script>
   </body>
 </html>
-
